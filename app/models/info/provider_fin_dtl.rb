@@ -1,12 +1,12 @@
-class Info::CustomerFinDtl < Info::RelationshipFinDtl
+class Info::ProviderFinDtl < Info::RelationshipFinDtl
   has_history
-  belongs_to :finance, :class_name => 'Info::CustomerFinance', foreign_key: :fin_id
+  belongs_to :finance, :class_name => 'Info::ProviderFinance', foreign_key: :fin_id
 
-  def cfd_id
+  def pfd_id
     rfd_id
   end
 
-  def cfd_id= value
+  def pfd_id= value
     self.rfd_id = value
   end
 
@@ -28,7 +28,7 @@ class Info::CustomerFinDtl < Info::RelationshipFinDtl
       _tmp_num = Info::CustomerFinDtl.where(wherestr).order(:num_tmp => :desc).first!.num_tmp + 1
       self.num_tmp = _tmp_num
       self.date_tmp = cdate
-      self.cfd_id = 'CFD_' + autoWord + '_' + cdate + ('000' + _tmp_num.to_s)[-4..-1]
+      self.cfd_id = 'PFD_' + autoWord + '_' + cdate + ('000' + _tmp_num.to_s)[-4..-1]
     end
   end
 end

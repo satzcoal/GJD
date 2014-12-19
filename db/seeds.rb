@@ -19,9 +19,14 @@
 site = Origin::Site.first
 site = Origin::Site.new unless site
 site.title = '管家爹' unless site.title
-site.sidebar_items.delete_all
+site.sidebar_items.destroy_all
 if (site.sidebar_items.empty?)
-  site.sidebar_items.build(name: '管家爹控制台', url: '/')
+  site.sidebar_items.build(name: '控制台', url: '/')
+
+  site_item = site.sidebar_items.build(name: site.title, url: '#')
+  site_item.sub_items.build(name: '基本设置', url: '/origin/site')
+  site_item.sub_items.build(name: '数据报表', url: '#')
+  site_item.sub_items.build(name: '公司资料', url: '#')
 
   peizhi_item = site.sidebar_items.build(name: '配置管理', url: '#')
   peizhi_item.sub_items.build(name: '品目配置', url: '/categories')
@@ -30,18 +35,31 @@ if (site.sidebar_items.empty?)
   peizhi_item.sub_items.build(name: '生产流水配置', url: '/batches')
 
   dingdan_item = site.sidebar_items.build(name: '订单管理', url: '#')
-  dingdan_item.sub_items.build(name: '采购订单', url:'/orders/?type=1')
-  dingdan_item.sub_items.build(name: '采购订单1', url:'/purchase_orders')
-  dingdan_item.sub_items.build(name: '销售订单', url:'/o_orders')
-  dingdan_item.sub_items.build(name: '采购订单1', url:'/sale_orders')
+  dingdan_item.sub_items.build(name: '采购订单', url: '/orders/?type=1')
+  dingdan_item.sub_items.build(name: '采购订单1', url: '/purchase_orders')
+  dingdan_item.sub_items.build(name: '销售订单', url: '/o_orders')
+  dingdan_item.sub_items.build(name: '采购订单1', url: '/sale_orders')
 
   cangku_item = site.sidebar_items.build(name: '仓库管理', url: '#')
-  cangku_item.sub_items.build(name: '入库管理', url:'/in_orders')
-  cangku_item.sub_items.build(name: '出库管理', url:'/out_orders')
-  cangku_item.sub_items.build(name: '库存查询', url:'/go_down_items')
+  cangku_item.sub_items.build(name: '入库管理', url: '/in_orders')
+  cangku_item.sub_items.build(name: '出库管理', url: '/out_orders')
+  cangku_item.sub_items.build(name: '库存查询', url: '/go_down_items')
+
+  caiwu_item = site.sidebar_items.build(name: '财务管理', url: '#')
+  caiwu_item.sub_items.build(name: '财务信息汇总', url: '/finance/show')
+  caiwu_item.sub_items.build(name: '应收款汇总', url: '/finance/index_in')
+  caiwu_item.sub_items.build(name: '应付款汇总', url: '/finance/index_out')
+  caiwu_item.sub_items.build(name: '客户出入账管理', url: '/info/customer_fin_dtls')
+  caiwu_item.sub_items.build(name: '供应商出入账管理', url: '/info/provider_fin_dtls')
+
+  kehu_item = site.sidebar_items.build(name: '资料管理', url: '#')
+  kehu_item.sub_items.build(name: '客户资料管理', url: '/info/customers')
+  kehu_item.sub_items.build(name: '供应商资料管理', url: '/info/providers')
 
   xitong_item = site.sidebar_items.build(name: '系统管理', url: '#')
-  xitong_item.sub_items.build(name: '用户管理', url:'/origin/users')
+  xitong_item.sub_items.build(name: '用户管理', url: '/origin/users')
+  xitong_item.sub_items.build(name: '角色管理', url: '/origin/roles')
+  xitong_item.sub_items.build(name: '菜单项管理', url: '/origin/sidebar_items')
 end
 site.save
 
@@ -81,13 +99,10 @@ Origin::User.find_or_create_by(name: 'lee') do |user|
 end
 
 # 添加供应商
-Info::Provider.delete_all
-x = Info::Provider.new
-x.name="李靖超"
-x.save()
+x = Info::Provider.find_or_create_by(name: '李靖超').save
 
 # 添加仓库信息
-GoDown.delete_all
+GoDown.destroy_all
 g = GoDown.new
 g.GoDownId = "G_0001"
 g.Name = "海淀一号"
@@ -97,19 +112,19 @@ g.Tel = "18612345678"
 g.save()
 
 #添加品目信息
-SubCategory.delete_all
-Category.delete_all
+SubCategory.destroy_all
+Category.destroy_all
 pm = Category.new
 pm.Name = "凡士林"
 pm.Type= "原料"
 #物品规格
-pm.sub_categories.build(:Name=>"10ML")
+pm.sub_categories.build(:Name => "10ML")
 pm.save()
 #添加品目规格
 
 #添加物品信息
-Item.delete_all
-item  = Item.new
+Item.destroy_all
+item = Item.new
 item.Name= "百雀羚"
 item.CategoryName= "凡士林"
 item.subCategoryName = "10ML"
@@ -121,7 +136,7 @@ item.Discount = 8
 item.save()
 
 #生产批次
-Batch.delete_all
+Batch.destroy_all
 bh = Batch.new
 bh.Batchid = "B_00001"
 bh.Date= Time.now.localtime.strftime("%Y-%m-%d %H:%M:%S")

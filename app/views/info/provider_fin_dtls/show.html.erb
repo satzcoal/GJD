@@ -1,0 +1,70 @@
+<h5 class="widget-name"><i class="fa fa-plus"></i>出入账明细</h5>
+<div class="row-fluid" style="margin-bottom: 1px">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <h6>出入账表单</h6>
+      <%= link_to '返回', info_provider_fin_dtls_path, :class => 'btn btn-warning pull-right' %>
+      <% if @info_provider_fin_dtl.status_id == 0 %>
+        <%= link_to '删除', info_provider_fin_dtl_path, method: :delete, data: {confirm: '确定要删除吗？'}, :class => 'btn btn-danger pull-right' %>
+        <%= link_to '编辑', edit_info_provider_fin_dtl_path(@info_provider_fin_dtl), :class => 'btn btn-success pull-right' %>
+        <%= link_to '执行', info_cfd_proceed_path(@info_provider_fin_dtl), :class => 'btn btn-info pull-right' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="well invoice">
+    <div class="invoice-logo" style="margin-left: 20px; ">
+      <span>供应商编号：<%= @info_provider.pid %></span>
+
+      <h1 style="line-height: 20px;"><%= @info_provider.name %>
+        <% if @info_provider.has_short_name? %>（<%= @info_provider.shortName %>）
+        <% end %></h1>
+    </div>
+
+    <div class="total pull-right" style="margin: 0px; margin-right: 20px;">
+      <span>当前账户余额</span>
+      <strong class="text-error">￥<%= @info_provider.finance.amount %></strong>
+    </div>
+    <div class="row-fluid">
+
+    </div>
+  </div>
+</div>
+<div class="well invoice">
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="invoice-from pull-left">
+        <h5>出入账编号：<span class="text-error"><%= @info_provider_fin_dtl.cfd_id %></span></h5>
+        <ul class="plus-list">
+          <li>说明：<%= @info_provider_fin_dtl.comment %></li>
+          <li>进出类型：<%= if @info_provider_fin_dtl.in_or_out
+                         raw '<span class="text-error"><strong>进账</strong></span>'
+                       else
+                         raw '<span class="text-success"><strong>出账</strong></span>'
+                       end %></li>
+          <li>当前状态：<%= if @info_provider_fin_dtl.status_id == 0
+                         raw "<span class=\"label label-success\">#{GJD::Application::DICT_CFD_STATUS[@info_provider_fin_dtl.status_id]}</span>"
+                       elsif @info_provider_fin_dtl.status_id == 1
+                         raw "<span class=\"label label-important\">#{GJD::Application::DICT_CFD_STATUS[@info_provider_fin_dtl.status_id]}</span>"
+                       elsif @info_provider_fin_dtl.status_id == 2
+                         raw "<span class=\"label\">#{GJD::Application::DICT_CFD_STATUS[@info_provider_fin_dtl.status_id]}</span>"
+                       end %></li>
+          <li>修改时间：<%= @info_provider_fin_dtl.updated_at.localtime.strftime('%Y-%m-%d %H:%M:%S') %></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span6">
+      <div class="total pull-right">
+        <span>出入账金额</span>
+        <strong class="text-error">
+          <%= if @info_provider_fin_dtl.in_or_out
+                raw "<strong class=\"text-error\">￥#{@info_provider_fin_dtl.money}</strong>"
+              else
+                raw "<strong class=\"text-success\">￥#{@info_provider_fin_dtl.money}</strong>"
+              end %>
+        </strong>
+      </div>
+    </div>
+  </div>
+</div>

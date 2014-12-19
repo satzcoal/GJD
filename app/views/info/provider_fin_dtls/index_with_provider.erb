@@ -1,0 +1,29 @@
+<h5 class="widget-name"><i class="fa fa-list"></i>出入账列表</h5>
+<div class="row-fluid" style="margin-bottom: 1px">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <h6>出入账列表</h6>
+      <%= link_to '返回', @info_provider, :class => 'btn btn-warning pull-right' %>
+      <%= link_to '新建出入账', info_pfd_new_with_provider_path(@info_provider), :class => 'btn btn-info pull-right' %>
+    </div>
+  </div>
+
+  <div class="well invoice">
+    <div class="invoice-logo" style="margin-left: 20px; ">
+      <span>客户编号：<%= @info_provider.rid %></span>
+
+      <h1 style="line-height: 20px;"><%= @info_provider.name %>
+        <% if @info_provider.has_short_name? %>（<%= @info_provider.shortName %>）
+        <% end %></h1>
+    </div>
+
+    <div class="total pull-right" style="margin: 0px; margin-right: 20px;">
+      <span>当前账户余额</span>
+      <strong class="text-error">￥<%= @info_provider.finance.amount %></strong>
+    </div>
+    <div class="row-fluid">
+
+    </div>
+  </div>
+</div>
+<%= render 'index' %>

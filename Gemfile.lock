@@ -38,6 +38,7 @@ GEM
     coffee-script-source (1.8.0)
     daemons (1.1.9)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.2.1)
     font-awesome-rails (4.2.0.0)
@@ -125,6 +126,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  eventmachine
   font-awesome-rails
   jbuilder (~> 2.0)
   jquery-rails

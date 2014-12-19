@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fin_id: 1
+  do_time: 2014-11-24 14:05:25
+  in_or_out: false
+  money: 9.99
+  status_id: 1
+  comment: MyString
+  order_id: 1
+  rfd_id: MyString
+  date_tmp: MyString
+  num_tmp: 1
+
+two:
+  fin_id: 1
+  do_time: 2014-11-24 14:05:25
+  in_or_out: false
+  money: 9.99
+  status_id: 1
+  comment: MyString
+  order_id: 1
+  rfd_id: MyString
+  date_tmp: MyString
+  num_tmp: 1

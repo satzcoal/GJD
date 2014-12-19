@@ -2,10 +2,12 @@ module HasHistory
 
   module ClassMethods
     def has_history(name=:histories, options={})
+      base_namespace = self.to_s.split('::')[0..-2].join('::')
+      base_namespace = 'Object' if base_namespace == ''
       base_name = self.to_s.split('::')[-1] + 'History'
-      unless defined?(base_name) && base_name.is_a?(Class)
-        Common.const_set(base_name, create_tmp_class)
-        self.has_many(name, :class_name => "Common::#{base_name}", foreign_key: :item_id)
+      unless eval("defined?(#{self.to_s}History)") && eval("#{self.to_s}History.is_a?(Class)")
+        eval("#{base_namespace}.const_set(base_name, create_tmp_class)")
+        self.has_many(name, :class_name => base_name, foreign_key: :item_id)
 
         options[:create] = true if options[:create] == nil
         options[:destroy] = true if options[:destroy] == nil
@@ -13,7 +15,7 @@ module HasHistory
 
         options.each do |key, value|
           if value
-            eval("self.after_#{key} :after_#{key}_his")
+            eval("self.around_#{key} :around_#{key}_his")
           end
         end
 
@@ -31,15 +33,19 @@ module HasHistory
   module InstanceMethods
 
     def respond_to?(method, pri=false)
-      (method.to_s =~ /^after_(\w+)_his$/) || super
+      (method.to_s =~ /^around_( \ w+)_his$/) || super
     end
 
     def method_missing(sym, *args)
-      if sym.to_s =~ /^after_(\w+)_his$/
+      if sym.to_s =~ /^around_(\w+)_his$/
+        flag = self.changed? && defined?(session)
+        diff = self.changes
+        yield
+        return unless flag
         pattern = $1
         attr_name = self.tmp_his_attr
         hisArr = instance_eval(attr_name.to_s)
-        hisArr.build(:user_id => session[:user_id], :item_id => self.id, :op_type => pattern).save
+        hisArr.build(:user_id => session[:user_id], :item_id => self.id, :op_type => pattern, :detail => diff.to_s).save
       else
         super
       end

@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   namespace :origin do
     resources :sidebar_items
     resources :roles
-    resources :sites
     resources :users
     controller :sessions do
       get 'login' => :new
@@ -38,6 +37,21 @@ Rails.application.routes.draw do
       get 'logout' => :destroy
       post 'ajax_authorize' => :ajax_authorize
       post 'ajax_changepass' => :ajax_changepass
+    end
+
+    controller :sites do
+      get 'site' => :show, :as => :site
+      get 'site/edit' => :edit, :as => :edit_site
+      put 'site' => :update
+      patch 'site' => :update
+    end
+  end
+
+  namespace :finance do
+    controller :accounts do
+      get 'show' => :show
+      get 'index_in' => :index_in
+      get 'index_out' => :index_out
     end
   end
 
@@ -48,6 +62,7 @@ Rails.application.routes.draw do
     resources :customers
     resources :providers
     resources :customer_fin_dtls
+    resources :provider_fin_dtls
 
     controller :customers do
       get 'customers/:id/finance' => :show_finance, :as => :customer_finance
@@ -58,6 +73,12 @@ Rails.application.routes.draw do
       get 'customers/:id/finance_dtls/index' => :index_with_customer, :as => :cfd_index_with_customer
       post 'customer_fin_dtl/proceed' => :save_and_proceed, :as => :cfd_save_and_proceed
       get 'customer_fin_dtl/:id/proceed' => :proceed, :as => :cfd_proceed
+    end
+
+    controller :provider_fin_dtls do
+      get 'providers/:id/finance_dtls/new' => :new_with_provider, :as => :pfd_new_with_provider
+      get 'providers/:id/finance_dtls/index' => :index_with_provider, :as => :pfd_index_with_provider
+      get 'provider_fin_dtl/:id/proceed' => :proceed, :as => :pfd_proceed
     end
   end
 

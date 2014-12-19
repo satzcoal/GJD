@@ -1,6 +1,6 @@
 class Info::Provider < Info::Relationship
   has_history
-  before_create :generate_provider_num
+  has_one :finance, :class_name => 'Info::ProviderFinance', :foreign_key => :parent_id, :dependent => :destroy
 
   def pid=(value)
     self.rid = value
@@ -11,7 +11,7 @@ class Info::Provider < Info::Relationship
   end
 
   private
-  def generate_provider_num
+  def generate_num
     if Info::Provider.count == 0
       self.pid, self.tmp_rid = 'C00001', 1
     else
@@ -19,5 +19,9 @@ class Info::Provider < Info::Relationship
       self.tmp_rid = _tmp_num
       self.pid = 'P'+('0000' + _tmp_num.to_s)[-5..-1]
     end
+  end
+
+  def create_finance_method
+    self.create_finance(:amount => 0, :back_amount => 0) unless self.finance
   end
 end
