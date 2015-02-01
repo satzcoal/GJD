@@ -33,7 +33,7 @@ module HasHistory
   module InstanceMethods
 
     def respond_to?(method, pri=false)
-      (method.to_s =~ /^around_( \ w+) _his $/) || super
+      (method.to_s =~ /^around_( \ w+)_his$/) || super
     end
 
     def method_missing(sym, *args)

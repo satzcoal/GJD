@@ -1,32 +1,39 @@
-<div class="right-content">
-  <div class="nav">
-    <div class="navbar-inner"><h6>入库单列表</h6></div>
-  </div>
-  <div class="well-white body">
-    <table class="table">
-      <tr>
-        <th>入库单编号</th>
-        <th>仓库名称</th>
-        <th>执行时间</th>
-        <th>执行人</th>
-        <th>状态</th>
-      </tr>
-      <% InOrder.where(:State => "新建").each do |inorder| %>
+<div class="widget">
+  <h5 class="widget-title">入库单列表</h5>
+
+  <div class="well body">
+    <% inorders = InOrder.where(:State => "新建") %>
+    <% if inorders.count() >0 %>
+
+        <table class="table">
           <tr>
-            <td><%= inorder.InOrderId %></td>
-            <td><%= GoDown.find(inorder.GoDown_id).Name %></td>
-            <td><%= inorder.ExecTime %></td>
-            <td><%= inorder.Execer %></td>
-            <td>
-              <% if inorder.State == "新建" %>
-                  <a class="btn btn-success" href="/in_orders/exec/<%= inorder.id %>">执行入库</a>
-              <% else %>
-                  <%= inorder.State %>
-              <% end %>
-            </td>
+            <th>订单编号</th>
+            <th>入库单编号</th>
+            <th>供货商</th>
+            <th>仓库</th>
+            <th>状态</th>
           </tr>
-      <% end %>
-    </table>
+          <% inorders.each do |inorder| %>
+              <% baseorder = BaseOrder.find(inorder.Order_id) %>
+              <tr>
+                <td><%= baseorder.OrderId %></td>
+                <td><%= inorder.InOrderId %></td>
+                <td><%= baseorder.From %></td>
+                <td><%= GoDown.find(inorder.GoDown_id).Name %></td>
+                <td>
+                  <% if inorder.State == "新建" %>
+                      <a class="btn btn-success" href="/in_orders/exec/<%= inorder.id %>">执行入库</a>
+                  <% else %>
+                      <%= inorder.State %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+    <% else %>
+        <div class="alert margin">
+          目前没有入库单
+        </div>
+    <% end %>
   </div>
 </div>
-

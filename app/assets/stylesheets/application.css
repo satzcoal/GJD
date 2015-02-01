@@ -13,11 +13,14 @@
  *= require_tree .
  *= require_self
  */
-.well-white
-{
+.well-white {
     margin-top: -1px;
 }
-.clear
-{
-    clear:both;
+
+.clear {
+    clear: both;
+}
+
+.navbar {
+    margin-top: 1px;
 }

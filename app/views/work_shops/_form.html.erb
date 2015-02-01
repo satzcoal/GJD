@@ -1,0 +1,29 @@
+<%= form_for(@work_shop) do |f| %>
+  <% if @work_shop.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@work_shop.errors.count, "error") %> prohibited this work_shop from being saved:</h2>
+
+      <ul>
+      <% @work_shop.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :admin %><br>
+    <%= f.text_field :admin %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

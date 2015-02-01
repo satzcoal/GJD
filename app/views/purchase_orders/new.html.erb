@@ -2,9 +2,15 @@
     select {
         width: 170px;
     }
+
     .table input[type="text"] {
         width: 80px;
     }
+    .control-group
+    {
+        padding:0px;
+    }
+
 
 </style>
 <div class="row-fluid">
@@ -22,13 +28,14 @@
       <% end %>
       <div class="nav">
         <div class="navbar-inner"><h6>新建采购订单</h6></div>
+        <input type="hidden" value="1" id="order_Type"/>
       </div>
       <div class="well-white body">
         <div class="widget">
           <div class="span3">
             <div class="input-prepend">
               <span class="add-on">订单编号： </span>
-              <%= f.text_field :OrderId ,{:Class=> "input-medium"} %>
+              <%= f.text_field :OrderId, {:Class => "input-medium"} %>
             </div>
           </div>
           <div class="span3">
@@ -64,8 +71,12 @@
                 <td><input type="text" id="category<%= x %>" readonly="true"></td>
                 <td><input type="text" id="subcategory<%= x %>" readonly="true"></td>
                 <td><input type="text" id="saleprice<%= x %>" readonly="true"></td>
-                <td><div><%= text_field "itemline#{x}", "FactSalePrice" %></div></td>
-                <td><div><%= text_field "itemline#{x}", "Sum" %></div></td>
+                <td>
+                  <div><%= text_field "itemline#{x}", "FactSalePrice" %></div>
+                </td>
+                <td>
+                  <div><%= text_field "itemline#{x}", "Sum" %></div>
+                </td>
                 <td><%= select("itemline#{x}", "GoDown_id", @GoDwons.map { |c| [c.Name, c.id] }) %></td>
               </tr>
           <% end %>
@@ -83,53 +94,44 @@
   <script>
       $(document).ready(function () {
           iniItems();
-          $("input[type=submit]").click(function(){
+          $("input[type=submit]").click(function () {
               var haserror = false;
               var hasselect = false;
-              $(".items").each(function(){
-                  var id =$(this).attr("rowid");
-                  var itemid= $("#itemline" + id + "_Item_id").val();
+              $(".items").each(function () {
+                  var id = $(this).attr("rowid");
+                  var itemid = $("#itemline" + id + "_Item_id").val();
                   debugger;
-                  if(itemid != "")
-                  {
+                  if (itemid != "") {
                       hasselect = true;
-                      if($("#itemline"+ id + "_FactSalePrice").val() =="")
-                      {
-                          $("#itemline"+ id + "_FactSalePrice").parent().addClass("control-group error");
+                      if ($("#itemline" + id + "_FactSalePrice").val() == "") {
+                          $("#itemline" + id + "_FactSalePrice").parent().addClass("control-group error");
                           haserror = true;
                       }
-                      else
-                      {
-                          $("#itemline"+ id + "_FactSalePrice").parent().removeClass("control-group error");
+                      else {
+                          $("#itemline" + id + "_FactSalePrice").parent().removeClass("control-group error");
                       }
-                      if($("#itemline"+ id + "_Sum").val() =="")
-                      {
-                          $("#itemline"+ id + "_Sum").parent().addClass("control-group error");
+                      if ($("#itemline" + id + "_Sum").val() == "") {
+                          $("#itemline" + id + "_Sum").parent().addClass("control-group error");
                           haserror = true;
                       }
-                      else
-                      {
-                          $("#itemline"+ id + "_Sum").parent().removeClass("control-group error");
+                      else {
+                          $("#itemline" + id + "_Sum").parent().removeClass("control-group error");
                       }
                   }
 
               });
-              if(!hasselect)
-              {
+              if (!hasselect) {
                   haserror = true;
                   $("#itemNo1").parent().addClass("control-group error");
               }
-              else
-              {
+              else {
                   $("#itemNo1").parent().removeClass("control-group error");
               }
               debugger;
-              if(haserror)
-              {
+              if (haserror) {
                   return false;
               }
-              else
-              {
+              else {
                   return true;
               }
 

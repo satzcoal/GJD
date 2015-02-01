@@ -1,0 +1,2 @@
+module WorkShopsHelper
+end
