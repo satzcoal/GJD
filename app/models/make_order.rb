@@ -1,0 +1,2 @@
+class MakeOrder < BaseOrder
+end

@@ -1,0 +1,29 @@
+<h1>Listing work_shops</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Admin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @work_shops.each do |work_shop| %>
+      <tr>
+        <td><%= work_shop.name %></td>
+        <td><%= work_shop.address %></td>
+        <td><%= work_shop.admin %></td>
+        <td><%= link_to 'Show', work_shop %></td>
+        <td><%= link_to 'Edit', edit_work_shop_path(work_shop) %></td>
+        <td><%= link_to 'Destroy', work_shop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Work shop', new_work_shop_path %>

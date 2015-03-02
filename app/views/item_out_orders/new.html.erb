@@ -1,0 +1,82 @@
+<style>
+    select {
+        width: 170px;
+    }
+
+    .table input[type="text"] {
+        width: 80px;
+    }
+
+    .control-group {
+        padding: 0px;
+    }
+
+
+</style>
+<div class="row-fluid">
+  <%= form_for(@item_out_order) do |f| %>
+      <% if @item_out_order.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+            <ul>
+              <% @order.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <div class="nav">
+        <div class="navbar-inner"><h6>新建原料出库单</h6></div>
+      </div>
+      <div class="well-white body">
+        <div class="widget">
+          <div class="span3">
+            <div class="input-prepend">
+              <span class="add-on">原料出库单编号： </span>
+              <%= f.text_field :OrderId, {:Class => "input-medium"} %>
+            </div>
+          </div>
+          <div class="span3">
+            <div class="input-prepend">
+              <span class="add-on">生产车间： </span>
+              <%= f.select :To, WorkShop.all.map { |c| [c.name, c.id] } %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="well-white body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>物品编号</th>
+            <th>物品名称</th>
+            <th>品目</th>
+            <th>型号</th>
+            <th>库存</th>
+            <th>数量</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% Item.where(:Type => "原料").each do |item| %>
+              <tr>
+                <td><%= item.ItemId %></td>
+                <td><%= item.Name %></td>
+                <td><%= item.CategoryName %></td>
+                <td><%= item.subCategoryName %></td>
+                <td><%= GoDownItem.where(:Item_id => item.id).sum(:Sum) %></td>
+                <td><input type="number" id="orderitemid_<%= item.id %>" name="orderitemid_<%= item.id %>" min="0">
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="align-center">
+          <%= f.submit("新建", {:Class => "btn btn-primary"}) %>
+        </div>
+      </div>
+
+      </div>
+  <% end %>
+

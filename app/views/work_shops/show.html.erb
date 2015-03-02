@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @work_shop.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @work_shop.address %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @work_shop.admin %>
+</p>
+
+<%= link_to 'Edit', edit_work_shop_path(@work_shop) %> |
+<%= link_to 'Back', work_shops_path %>

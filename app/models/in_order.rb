@@ -1,3 +1,3 @@
 class InOrder < ActiveRecord::Base
-  belongs_to :order
+  belongs_to :base_order
 end

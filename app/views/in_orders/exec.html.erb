@@ -1,9 +1,5 @@
-<style>
-    .add-on {
-        width: 200px;
-    }
-</style>
-<div class="row-fluid">
+<div class="widget">
+  <h6 class="widget-title">入库</h6>
   <%= form_tag(in_orders_ingodown_path) do |f| %>
       <% if @in_order.errors.any? %>
           <div id="error_explanation">
@@ -16,95 +12,173 @@
             </ul>
           </div>
       <% end %>
-      <div class="right-content span12">
-        <div class="nav">
-          <div class="navbar-inner"><h6>入库</h6></div>
+
+      <div class="row-fluid">
+        <div class="span4">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <h6>订单信息</h6>
+            </div>
+          </div>
+
+          <div class="well invoice">
+            <div class="invoice-head">
+              <ul class="pull-left minus-list invoice-data">
+                <li>入库单编号: <strong class="text-info pull-right"><%= @in_order.InOrderId %></strong></li>
+                <li>订单编号: <strong class="text-info pull-right"><%= @order.OrderId %></strong></li>
+                <li>订单类型: <strong class="text-info pull-right"><%= @order.type %></strong></li>
+                <li>创建人: <span class="pull-right"><%= @order.CreateUser %></span></li>
+                <li>创建时间 <strong class="pull-right text-error"><%= @order.CreateTime %></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="well-white body">
-          <div class="row-fluid">
-            <%= hidden_field :in_order, :id %>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on">订单编号： </span>
-                <input type="text" readonly="true" value="<%= @order.OrderId %>" class="input-prepend">
-              </div>
-            </div>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on">订单名称： </span>
-                <input type="text" readonly="true" value="<%= @order.Name %>" class="input-prepend">
-              </div>
-            </div>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on"> 创建人： </span>
-                <input type="text" readonly="true" value="<%= @order.CreateUser %>" class="input-prepend">
-              </div>
-            </div>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on">出库单： </span>
-                <input type="text" readonly="true" value="<%= @in_order.InOrderId %>" class="input-prepend">
-              </div>
-            </div>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on"> 仓库： </span>
-                <input type="text" readonly="true" value="<%= @gd.Name %>" class="input-prepend">
-              </div>
-            </div>
-            <div class="span3">
-              <div class="input-prepend">
-                <span class="add-on">创建时间： </span>
-                <input type="text" readonly="true" value="<%= @order.CreateTime %>" class="input-prepend">
-              </div>
+        <div class="span4">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <h6>供货商信息</h6>
             </div>
           </div>
-          <table class="table">
-            <thead>
-            <tr>
-              <th>序号</th>
-              <th>物品名称</th>
-              <th>规格</th>
-              <th>型号</th>
-              <th>数量</th>
-              <th>实际入库数量</th>
-              <th>批次号</th>
-              <th>生成日期</th>
-              <th>保质期</th>
-              <th>供货商</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <% i=1 %>
-            <input type="hidden" id="items_count" name="items[count]" value="<%= @sub_orders.count %>">
-            <% @sub_orders.each do |sub_order| %>
-                <tr>
-                  <td><%= i %>
-                    <input type="hidden" id="itemline<%= i %>_Item_id" name="itemline<%= i %>[Item_id]" value="<%= sub_order.Item_id %>">
-                  </td>
-                  <% @item = Item.find(sub_order.Item_id) %>
-                  <td><%= @item.Name %></td>
-                  <td><%= @item.CategoryName %></td>
-                  <td><%= @item.subCategoryName %></td>
-                  <td><%= sub_order.Sum %></td>
-                  <td><%= number_field "itemline#{i}", "Sum" %></td>
-                  <td><%= text_field "itemline#{i}", "BatchId" %></td>
-                  <td><%= text_field "itemline#{i}", "CreateTime" %></td>
-                  <td><%= text_field "itemline#{i}", "Shelflife" %></td>
-                  <td><%= text_field "itemline#{i}", "MadeIn" %></td>
-                </tr>
-                <% i =i+1 %>
-            <% end %>
-            </tbody>
-
-          </table>
-          <div class="align-center">
-            <input type="submit" value="入库" class="btn btn-primary">
+          <div class="well invoice">
+            <dl class="dl-horizontal">
+              <dt>供货商:</dt>
+              <dd><%= @order.From %></dd>
+              <dt>供货商地址:</dt>
+              <dd><%= @order.FromAddress %></dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+            </dl>
           </div>
+        </div>
 
+        <div class="span4">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <h6>仓库信息</h6>
+            </div>
+          </div>
+          <div class="well invoice">
+            <dl class="dl-horizontal">
+              <dt>仓库:</dt>
+              <dd><%= @gd.Name %></dd>
+              <dt>位置:</dt>
+              <dd><%= @gd.Address %></dd>
+              <dt>负责人:</dt>
+              <dd><%= @gd.Admin %></dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <%= hidden_field :in_order, :id %>
+      <div class="navbar">
+        <div class="navbar-inner">
+          <h6>入库单内容</h6>
+        </div>
+      </div>
+
+      <div class="well body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>物品名称</th>
+            <th>规格</th>
+            <th>型号</th>
+            <th>批次号</th>
+            <th>生成日期</th>
+            <th>保质期</th>
+            <th>数量</th>
+            <th>实际入库数量</th>
+          </tr>
+          </thead>
+          <% if @order.type =="MakeOrder" %>
+              <tbody>
+              <% i=1 %>
+              <input type="hidden" id="items_count" name="items[count]" value="<%= @sub_orders.count %>">
+              <% @sub_orders.each do |sub_order| %>
+                  <tr>
+                    <td><%= i %>
+                      <input type="hidden" id="itemline<%= i %>_Item_id" name="itemline<%= i %>[Item_id]" value="<%= sub_order.Item_id %>">
+                    </td>
+                    <% @item = Item.find(sub_order.Item_id) %>
+                    <td><%= @item.Name %></td>
+                    <td><%= @item.CategoryName %></td>
+                    <td><%= @item.subCategoryName %></td>
+                    <td>
+                      <div><%= text_field "itemline#{i}", "BatchId", {:readonly => "true", :value => sub_order.BatchId} %></div>
+                    </td>
+                    <td>
+                      <div><%= text_field "itemline#{i}", "CreateTime", {:readonly => "true", :value => sub_order.CreateTime} %></div>
+                    </td>
+                    <td><%= text_field "itemline#{i}", "Shelflife" %></td>
+                    <td><%= sub_order.Sum %></td>
+                    <td><%= number_field "itemline#{i}", "Sum" %></td>
+                  </tr>
+                  <% i =i+1 %>
+              <% end %>
+              </tbody>
+          <% else %>
+              <tbody>
+              <% i=1 %>
+              <input type="hidden" id="items_count" name="items[count]" value="<%= @sub_orders.count %>">
+              <% @sub_orders.each do |sub_order| %>
+                  <tr>
+                    <td><%= i %>
+                      <input type="hidden" id="itemline<%= i %>_Item_id" name="itemline<%= i %>[Item_id]" value="<%= sub_order.Item_id %>">
+                    </td>
+                    <% @item = Item.find(sub_order.Item_id) %>
+                    <td><%= @item.Name %></td>
+                    <td><%= @item.CategoryName %></td>
+                    <td><%= @item.subCategoryName %></td>
+                    <td><%= text_field "itemline#{i}", "BatchId" %></td>
+                    <td><%= text_field "itemline#{i}", "CreateTime" %></td>
+                    <td><%= text_field "itemline#{i}", "Shelflife" %></td>
+                    <td><%= sub_order.Sum %></td>
+                    <td><%= number_field "itemline#{i}", "Sum" %></td>
+                  </tr>
+                  <% i =i+1 %>
+              <% end %>
+              </tbody>
+          <% end %>
+
+        </table>
+        <div class="align-center" style="margin-top:1px;"><input type="submit" value="入库" class="btn btn-success">
+        </div>
   <% end %>
   </div>
-  </div>
+
 </div>
+<style>
+    select {
+        width: 170px;
+    }
+
+    .table input[type="text"] {
+        width: 80px;
+    }
+
+    .table input[type="number"] {
+        width: 80px;
+    }
+
+    .control-group {
+        padding: 0px;
+    }
+
+    .invoice-head {
+        border-bottom: 0px double #D5D5D5
+    }
+</style>

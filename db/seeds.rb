@@ -32,18 +32,25 @@ if (site.sidebar_items.empty?)
   peizhi_item.sub_items.build(name: '品目配置', url: '/categories')
   peizhi_item.sub_items.build(name: '物品配置', url: '/items')
   peizhi_item.sub_items.build(name: '仓库配置', url: '/go_downs')
-  peizhi_item.sub_items.build(name: '生产流水配置', url: '/batches')
+  peizhi_item.sub_items.build(name: '生产流水配置',url: '/batches')
+  peizhi_item.sub_items.build(name: '生产车间配置',url: '/work_shops')
 
   dingdan_item = site.sidebar_items.build(name: '订单管理', url: '#')
-  dingdan_item.sub_items.build(name: '采购订单', url: '/orders/?type=1')
-  dingdan_item.sub_items.build(name: '采购订单1', url: '/purchase_orders')
+  dingdan_item.sub_items.build(name: '采购订单', url: '/purchase_orders')
   dingdan_item.sub_items.build(name: '销售订单', url: '/o_orders')
   dingdan_item.sub_items.build(name: '采购订单1', url: '/sale_orders')
 
+  dingdan_item = site.sidebar_items.build(name: '生产管理', url: '#')
+  dingdan_item.sub_items.build(name: '原料出库', url: '/item_out_orders')
+  dingdan_item.sub_items.build(name: '产品入库', url: '/make_orders')
+
   cangku_item = site.sidebar_items.build(name: '仓库管理', url: '#')
+  cangku_item.sub_items.build(name: '库存查询', url: '/go_down_items')
   cangku_item.sub_items.build(name: '入库管理', url: '/in_orders')
   cangku_item.sub_items.build(name: '出库管理', url: '/out_orders')
-  cangku_item.sub_items.build(name: '库存查询', url: '/go_down_items')
+  cangku_item.sub_items.build(name: '物品转库', url: '/move_orders')
+  cangku_item.sub_items.build(name: '入库历史', url: '/go_down_items')
+  cangku_item.sub_items.build(name: '出库历史', url: '/go_down_items')
 
   caiwu_item = site.sidebar_items.build(name: '财务管理', url: '#')
   caiwu_item.sub_items.build(name: '财务信息汇总', url: '/finance/show')
@@ -101,6 +108,13 @@ end
 # 添加供应商
 x = Info::Provider.find_or_create_by(name: '李靖超').save
 
+##添加客户
+#Info::Customer.delete_all
+#c = Info::Customer.new
+#c.name = "柳娜"
+#c.save()
+
+
 # 添加仓库信息
 GoDown.destroy_all
 g = GoDown.new
@@ -114,13 +128,22 @@ g.save()
 #添加品目信息
 SubCategory.destroy_all
 Category.destroy_all
+#添加品目1
 pm = Category.new
 pm.Name = "凡士林"
 pm.Type= "原料"
 #物品规格
 pm.sub_categories.build(:Name => "10ML")
 pm.save()
-#添加品目规格
+
+#添加品目2
+pm1 = Category.find_or_create_by(:Name => "防晒霜")
+pm1.Name = "防晒霜"
+pm1.Type= "产品"
+#物品规格
+pm1.sub_categories.build(:Name => "20ML")
+pm1.save()
+
 
 #添加物品信息
 Item.destroy_all
@@ -135,17 +158,61 @@ item.SalePrice = 300;
 item.Discount = 8
 item.save()
 
+item = Item.new
+item.Name= "欧莱雅"
+item.CategoryName= "防晒霜"
+item.subCategoryName = "10ML"
+item.ItemId = "i_00002"
+item.Type= "产品"
+item.BasePrice = 120;
+item.SalePrice = 300;
+item.Discount = 8
+item.save()
+
 #生产批次
 Batch.destroy_all
 bh = Batch.new
 bh.Batchid = "B_00001"
-bh.Date= Time.now.localtime.strftime("%Y-%m-%d %H:%M:%S")
+bh.Date= "2014-11-30"
 #bh.Date = Time.now.to_formatted_s(:db)
 bh.save()
 bh1 = Batch.new
 bh1.Batchid = "B_00002"
-bh1.Date= Time.now.localtime.strftime("%Y-%m-%d %H:%M:%S")
+bh1.Date= "2014-12-01"
 bh1.save()
 
+#生产车间  车间名称  位置  管理员
+#WorkShop.delete_all
+workshop = WorkShop.find_or_create_by(:name => "1号线")
+workshop.address = "装盒002"
+workshop.admin = "装盒人甲"
+workshop.save()
+
+workshop = WorkShop.find_or_create_by(:name => "2号线")
+workshop.address = "装盒002"
+workshop.admin = "装盒人乙"
+workshop.save()
+
+workshop = WorkShop.find_or_create_by(:name => "3号线")
+workshop.address = "装盒003"
+workshop.admin = "装盒人丙"
+workshop.save()
+
+
+#清空各种订单
+BaseOrder.delete_all
+OrderItem.delete_all
+
+#清空库存信息
+GoDownItem.delete_all
+
+#清空入库单
+InOrder.delete_all
+
+#出库单
+OutOrder.delete_all
+#出库单详细
+OutOrderItem.delete_all
+OutOrderItemHis.delete_all
 
 

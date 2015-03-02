@@ -1,0 +1,203 @@
+<%= form_tag("/item_out_orders/CreateOutOrder", method: "post") do %>
+    <div class="widget">
+      <h5 class="widget-name"><i class="fa fa-list"></i>原料出库订单</h5>
+
+      <div class="row-fluid">
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="widget">
+              <div class="navbar">
+                <div class="navbar-inner"><h6>基本信息</h6></div>
+              </div>
+              <div class="well body">
+                <dl class="dl-horizontal">
+                  <dt>订单编号：</dt>
+                  <dd><%= @item_out_order.OrderId %>&nbsp;<input type="hidden" id="id" name="id" value="<%= @item_out_order.id%>"> </dd>
+                  <dt>订单状态：</dt>
+                  <dd><%= @item_out_order.State %></dd>
+                  <dt>创建人：</dt>
+                  <dd><%= @item_out_order.CreateUser %></dd>
+                  <dt>创建时间：</dt>
+                  <dd><%= @item_out_order.CreateTime %></dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="widget">
+              <div class="navbar">
+                <div class="navbar-inner"><h6>生产车间</h6></div>
+              </div>
+              <div class="well body">
+                <dl class="dl-horizontal">
+                  <dt>生产车间：</dt>
+                  <dd><%= @item_out_order.To %></dd>
+                  <dt>生产车间：</dt>
+                  <dd><%= @item_out_order.ToAddress %></dd>
+                  <dt>&nbsp;</dt>
+                  <dd>&nbsp;</dd>
+                  <dt>&nbsp;</dt>
+                  <dd>&nbsp;</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar">
+          <div class="navbar-inner"><h6>详细信息</h6></div>
+        </div>
+        <div class="well body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th>物品名称</th>
+              <th>规格</th>
+              <th>型号</th>
+              <th>订单数量</th>
+              <th width="120px;">出库数量</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% i =1 %>
+            <% @item_out_order.order_items.each do |item| %>
+                <tr id="row_<%= i %>">
+                  <td><%= i %></td>
+                  <% @item = Item.find(item.Item_id) %>
+                  <td><%= @item.Name %></td>
+                  <td><%= @item.CategoryName %></td>
+                  <td><%= @item.subCategoryName %></td>
+                  <td class="max"><%= item.Sum %></td>
+                  <td>
+                    <div>
+                      <input type="text" id="sum<%= i %>" value="0" max="<%= item.Sum %>" class="input-mini align-center" readonly="true"/>
+                    </div>
+                  </td>
+                  <td><a href="#" data="<%= i %>" type="button" onclick="test(this);" class="btn">选择库存</a></td>
+                </tr>
+                <tr class="hide">
+                  <td colspan="7">
+                    <div class="row-fluid">
+                      <table class="table">
+                        <thead>
+                        <tr>
+                          <th>仓库</th>
+                          <th>生产日期</th>
+                          <th>生产批次</th>
+                          <th>库存数量</th>
+                          <th width="200px">出库数量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% GoDownItem.where(:Item_id => item.Item_id).where("Sum > ?", 0).group(:GoDown_id, :BatchId, :CreateTime).sum(:Sum).each do |goditem| %>
+
+                            <tr>
+                              <input type="hidden" id="outOrder<%= item.Item_id %>_[Item_Id]" name="outOrder<%= item.Item_id %>[Item_Id]" value="<%= item.Item_id %>">
+                              <input type="hidden" id="outOrder<%= item.Item_id %>_[BatchId]" name="outOrder<%= item.Item_id %>[BatchId]" value="<%= goditem[0][1] %>">
+                              <input type="hidden" id="outOrder<%= item.Item_id %>_[CreateTime]" name="outOrder<%= item.Item_id %>[CreateTime]" value="<%= goditem[0][2] %>">
+                              <input type="hidden" id="outOrder<%= item.Item_id %>_[GoDown_id]" name="outOrder<%= item.Item_id %>[GoDown_id]" value="<%= goditem[0][0] %>">
+                              <td> <%= GoDown.find(goditem[0][0]).Name %></td>
+                              <td><%= goditem[0][2] %></td>
+                              <td><%= goditem[0][1] %></td>
+                              <td><%= goditem[1] %></td>
+                              <td>
+                                <input type="number" id="outOrder<%= item.Item_id %>_[Sum]" name="outOrder<%= item.Item_id %>[Sum]" value="0" class="input-mini align-center" min="0" max="<%= goditem[1] %>"/>
+                              </td>
+                            </tr>
+                        <% end %>
+                        <tr>
+                          <td colspan="4"></td>
+                          <td>
+                            <a href="javascript:;" data="<%= i %>" onclick="showSum(this);" class="btn btn-primary">确定</a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <% i =i+1 %>
+            <% end %>
+            </tbody>
+          </table>
+
+
+          <div class="align-center">  <%= submit_tag("生成出库单", {:Class => "btn btn-primary", :onclick => "return checkSum();"}) %></div>
+        </div>
+
+      </div>
+    </div>
+
+    <style>
+        select {
+            width: 170px;
+        }
+
+        .table input[type="text"] {
+            width: 80px;
+        }
+
+        .control-group {
+            padding: 0px;
+        }
+
+
+    </style>
+    <script>
+        function checkSum() {
+            debugger;
+            $(".max").each(function () {
+                debugger;
+                var max = parseInt($(this).html());
+                var value = $(this).next().find("input").val();
+                if (value == "") {
+                    $(this).next().find("input").parent().addClass("control-group error");
+                }
+                else {
+                    var intvalue = parseInt(value);
+                    if (max != intvalue) {
+                        $(this).next().find("input").parent().addClass("control-group error");
+                        return false;
+                    }
+                    else {
+                        $(this).next().find("input").parent().removeClass("control-group error");
+                    }
+
+                }
+                //bootbox.alert($(this).next.first().val());
+            });
+            return true;
+
+        }
+        function test(obj) {
+            $("#row_" + $(obj).attr("data")).next().toggle();
+            //bootbox.alert();
+        }
+        function showSum(obj) {
+            var row_id = $(obj).attr("data");
+            //计算总和
+            var order_sum = $("#sum" + row_id).val();
+            //记录 仓库-批次-生产日期-库存
+            var numbers = $("#row_" + $(obj).attr("data")).next().find("input[type=number]");
+            var max = parseInt($("#row_" + row_id).find(".max").html());
+            var input_sum = 0;
+
+            numbers.each(function () {
+                input_sum += parseInt($(this).val());
+            });
+            if (input_sum != max) {
+                bootbox.alert("选择数量与订单数量不符，请核对！");
+                //alert("选择数量与订单数量不符，请核对！");
+            }
+            else {
+                $("#sum" + row_id).val(input_sum);
+                $("#row_" + $(obj).attr("data")).next().toggle();
+            }
+
+
+        }
+    </script>
+
+<% end %>

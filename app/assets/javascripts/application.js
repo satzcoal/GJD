@@ -29,6 +29,7 @@ function iniItems() {
     iniGodwns();
     iniBatchs();
     var type = $("#order_Type").val();
+//    alert(type);
     if (type == "1") {
         select = "原料";
     }
@@ -66,8 +67,28 @@ function iniBatchs() {
     if (Batchs == null) {
         $.get(BatchsUrl, function (data, status) {
             Batchs = eval(data);
+            iniBatchs();
         });
     }
+    else
+    {
+        $(".workbatch").each(function(){
+            for(var i =0;i<Batchs.length;i++)
+            {
+                $(this).append("<option value="+ Batchs[i].Batchid +" data="+Batchs[i].Date +">"+ Batchs[i].Batchid+"</option>")
+            }
+            $(this).click(function(){
+                var rowid = $(this).attr("rowid");
+                var select = $(this).find("option:selected").attr("data");
+                $("#itemline" + rowid + "_CreateTime").val(select);
+
+            });
+        });
+
+
+    }
+
+
 }
 
 var ItmeUrl = "http://" + window.location.host + "/items.json/";
@@ -82,20 +103,18 @@ function changecategory(obj) {
     } else {
         debugger;
         $(".items").each(function () {
-            debugger;
             $(this).empty();
             var itemno = $("#itemline" + $(this).attr("rowid") + "_Item_id").val();
             $(this).append("<option value='请选择'  data='|'>请选择</option>");
             for (var i = 0; i < items.length; i++) {
-                //if (items[i].Type == select) {
-                if (items[i].id == itemno) {
-                    $(this).append("<option value='" + items[i].id + "' selected='true'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
+                if (items[i].Type == select) {
+                    if (items[i].id == itemno) {
+                        $(this).append("<option value='" + items[i].id + "' selected='true'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
+                    }
+                    else {
+                        $(this).append("<option value='" + items[i].id + "'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
+                    }
                 }
-                else {
-                    $(this).append("<option value='" + items[i].id + "'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
-                }
-
-                // }
             }
         });
     }

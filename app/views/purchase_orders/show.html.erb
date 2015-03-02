@@ -1,9 +1,96 @@
 <p id="notice"><%= notice %></p>
+<div class="widget">
+  <h5 class="widget-name"><i class="fa fa-list"></i>采购订单</h5>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="widget">
+        <div class="navbar">
+          <div class="navbar-inner"><h6>基本信息</h6></div>
+        </div>
+        <div class="well body">
+          <dl class="dl-horizontal">
+            <dt>订单编号：</dt>
+            <dd><%= @purchase_order.OrderId %></dd>
+            <dt>订单金额：</dt>
+            <dd><%= @purchase_order.FactTotal %>￥</dd>
+            <dt>订单状态：</dt>
+            <dd><%= @purchase_order.State %></dd>
+            <dt>财务状态：</dt>
+            <dd><%= @purchase_order.MoneyState %></dd>
+            <dt>创建人：</dt>
+            <dd><%= @purchase_order.CreateUser %></dd>
+            <dt>创建时间：</dt>
+            <dd><%= @purchase_order.CreateTime %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="span6">
+      <div class="widget">
+        <div class="navbar">
+          <div class="navbar-inner"><h6>供货商</h6></div>
+        </div>
+        <div class="well body">
+          <dl class="dl-horizontal">
+            <dt>供货商：</dt>
+            <dd><%= @purchase_order.From %></dd>
+            <dt>供货商地址：</dt>
+            <dd><%= @purchase_order.FromAddress %></dd>
+            <dt>供货商开户行：</dt>
+            <dd><%= @purchase_order.From_Back %></dd>
+            <dt>供货商银行帐号：</dt>
+            <dd><%= @purchase_order.From_BackAccountNum %></dd>
+            <dt>供货商银行帐户名：</dt>
+            <dd><%= @purchase_order.From_BackAccountName %></dd>
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="navbar-inner"><h6>详细信息</h6></div>
+  </div>
+  <div class="well body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>物品名称</th>
+        <th>规格</th>
+        <th>型号</th>
+        <th>价格</th>
+        <th>数量</th>
+        <th>仓库</th>
+      </tr>
+      </thead>
 
-<p>
-  <strong>OrderId:</strong>
-  <%= @purchase_order.OrderId %>
-</p>
+      <tbody>
+      <% i=1 %>
+      <% @orderitems.each do |orderitem| %>
+          <tr>
+            <td><%= i %></td>
+            <% @item = Item.find(orderitem.Item_id) %>
+            <td><%= @item.Name %></td>
+            <td><%= @item.CategoryName %></td>
+            <td><%= @item.subCategoryName %></td>
+            <td><%= orderitem.SalPrice %></td>
+            <td><%= orderitem.Sum %></td>
+            <td><%= GoDown.find(orderitem.GoDown_id).Name %></td>
+          </tr>
+          <% i =i+1 %>
+      <% end %>
+      </tbody>
 
-<%= link_to 'Edit', edit_purchase_order_path(@purchase_order) %> |
-<%= link_to 'Back', purchase_orders_path %>
+    </table>
+  </div>
+
+  <% if @purchase_order.State=="新建" %>
+      <div class="well-white body">
+        <div class="align-center"> <%= link_to "生成入库单", "/purchase_orders/split/#{@purchase_order.id}", {:Class => "btn btn-primary"} %></div>
+      </div>
+  <% end %>
+
+</div>
+
