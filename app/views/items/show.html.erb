@@ -23,11 +23,22 @@
           <td>  <%= @item.CategoryName %></td>
         </tr>
         <tr>
-          <td>型号：</td>
-          <td> <%= @item.subCategoryName %></td>
+        <td>型号：</td>
+        <td> <%= @item.subCategoryName %></td>
+      </tr>
+        <tr>
+          <td>成本价：</td>
+          <td> <%= @item.BasePrice %></td>
+        </tr>
+        <tr>
+          <td>销售价：</td>
+          <td> <%= @item.SalePrice %></td>
+        </tr>
+        <tr>
+          <td>打折：</td>
+          <td> <%= @item.Discount %></td>
         </tr>
       </table>
-
     </div>
   </div>
 </div>

@@ -1,8 +1,0 @@
-<h1>出库</h1>
-<hr>
-<ul>
-  <li>仓库:</li>
-  <li><%= select("itemline#{@x}","GoDown_id",options_for_select(GoDown.all.map{|c| [c.Name, c.id]})) %></li>
-  <li>订单</li>
-  <li><%= select("itemline#{@x}","GoDown_id",options_for_select(Order.all.map{|c| [c.Name, c.id]})) %></li>
-</ul>

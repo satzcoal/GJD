@@ -1,0 +1,59 @@
+<h1>Listing base_orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Orderid</th>
+      <th>Type</th>
+      <th>Total</th>
+      <th>Facttotal</th>
+      <th>From</th>
+      <th>Fromaddress</th>
+      <th>From back</th>
+      <th>From backaccountnum</th>
+      <th>From backaccountname</th>
+      <th>To</th>
+      <th>Toaddress</th>
+      <th>To back</th>
+      <th>To backaccountnum</th>
+      <th>To backaccountname</th>
+      <th>Moneystate</th>
+      <th>State</th>
+      <th>Createtime</th>
+      <th>Createuser</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @base_orders.each do |base_order| %>
+      <tr>
+        <td><%= base_order.OrderId %></td>
+        <td><%= base_order.type %></td>
+        <td><%= base_order.Total %></td>
+        <td><%= base_order.FactTotal %></td>
+        <td><%= base_order.From %></td>
+        <td><%= base_order.FromAddress %></td>
+        <td><%= base_order.From_Back %></td>
+        <td><%= base_order.From_BackAccountNum %></td>
+        <td><%= base_order.From_BackAccountName %></td>
+        <td><%= base_order.To %></td>
+        <td><%= base_order.ToAddress %></td>
+        <td><%= base_order.To_Back %></td>
+        <td><%= base_order.To_BackAccountNum %></td>
+        <td><%= base_order.To_BackAccountName %></td>
+        <td><%= base_order.MoneyState %></td>
+        <td><%= base_order.State %></td>
+        <td><%= base_order.CreateTime %></td>
+        <td><%= base_order.CreateUser %></td>
+        <td><%= link_to 'Show', base_order %></td>
+        <td><%= link_to 'Edit', edit_base_order_path(base_order) %></td>
+        <td><%= link_to 'Destroy', base_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Base order', new_base_order_path %>

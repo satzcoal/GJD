@@ -1,0 +1,3 @@
+class PurchaseOrder < BaseOrder
+
+ end

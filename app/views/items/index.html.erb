@@ -12,6 +12,9 @@
           <th>类型</th>
           <th>品目</th>
           <th>型号</th>
+          <th>成本价</th>
+          <th>销售价</th>
+          <th>折扣</th>
           <th></th>
         </tr>
         </thead>
@@ -24,6 +27,9 @@
               <td><%= item.Type %></td>
               <td><%= item.CategoryName %></td>
               <td><%= item.subCategoryName %></td>
+              <td><%= item.BasePrice %></td>
+              <td><%= item.SalePrice%></td>
+              <td><%= item.Discount%></td>
               <td><%= link_to '查看', item %>&nbsp;<%= link_to '编辑', edit_item_path(item) %>&nbsp;<%= link_to '删除', item, method: :delete, data: {confirm: 'Are you sure?'} %></td>
             </tr>
         <% end %>

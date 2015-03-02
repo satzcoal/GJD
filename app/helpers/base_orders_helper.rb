@@ -1,0 +1,2 @@
+module BaseOrdersHelper
+end

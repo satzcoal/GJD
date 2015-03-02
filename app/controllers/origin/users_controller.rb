@@ -29,7 +29,8 @@ class Origin::UsersController < ApplicationController
 
     respond_to do |format|
       if @origin_user.save
-        format.html { redirect_to origin_users_url, notice: "用户 #{@origin_user.name} 已经成功创建！" }
+        flash[:notice_type] = :success
+        format.html { redirect_to @origin_user, notice: "用户 #{@origin_user.name} 已经成功创建！" }
         format.json { render :show, status: :created, location: @origin_user }
       else
         format.html { render :new }
@@ -43,6 +44,7 @@ class Origin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @origin_user.update(origin_user_params)
+        flash[:notice_type] = :success
         format.html { redirect_to origin_users_url, notice: "用户 #{@origin_user.name} 已经修改完成！" }
         format.json { render :show, status: :ok, location: @origin_user }
       else
@@ -68,13 +70,13 @@ class Origin::UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_origin_user
-      @origin_user = Origin::User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_origin_user
+    @origin_user = Origin::User.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def origin_user_params
-      params.require(:origin_user).permit(:name, :hashed_password, :salt, :password, :password_confirmation, :role_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def origin_user_params
+    params.require(:origin_user).permit(:name, :pname, :hashed_password, :salt, :password, :password_confirmation, :role_id)
+  end
 end

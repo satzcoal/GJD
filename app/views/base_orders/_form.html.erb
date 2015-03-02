@@ -1,0 +1,89 @@
+<%= form_for(@base_order) do |f| %>
+  <% if @base_order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@base_order.errors.count, "error") %> prohibited this base_order from being saved:</h2>
+
+      <ul>
+      <% @base_order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :OrderId %><br>
+    <%= f.text_field :OrderId %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :Total %><br>
+    <%= f.text_field :Total %>
+  </div>
+  <div class="field">
+    <%= f.label :FactTotal %><br>
+    <%= f.text_field :FactTotal %>
+  </div>
+  <div class="field">
+    <%= f.label :From %><br>
+    <%= f.text_field :From %>
+  </div>
+  <div class="field">
+    <%= f.label :FromAddress %><br>
+    <%= f.text_field :FromAddress %>
+  </div>
+  <div class="field">
+    <%= f.label :From_Back %><br>
+    <%= f.text_field :From_Back %>
+  </div>
+  <div class="field">
+    <%= f.label :From_BackAccountNum %><br>
+    <%= f.text_field :From_BackAccountNum %>
+  </div>
+  <div class="field">
+    <%= f.label :From_BackAccountName %><br>
+    <%= f.text_field :From_BackAccountName %>
+  </div>
+  <div class="field">
+    <%= f.label :To %><br>
+    <%= f.text_field :To %>
+  </div>
+  <div class="field">
+    <%= f.label :ToAddress %><br>
+    <%= f.text_field :ToAddress %>
+  </div>
+  <div class="field">
+    <%= f.label :To_Back %><br>
+    <%= f.text_field :To_Back %>
+  </div>
+  <div class="field">
+    <%= f.label :To_BackAccountNum %><br>
+    <%= f.text_field :To_BackAccountNum %>
+  </div>
+  <div class="field">
+    <%= f.label :To_BackAccountName %><br>
+    <%= f.text_field :To_BackAccountName %>
+  </div>
+  <div class="field">
+    <%= f.label :MoneyState %><br>
+    <%= f.text_field :MoneyState %>
+  </div>
+  <div class="field">
+    <%= f.label :State %><br>
+    <%= f.text_field :State %>
+  </div>
+  <div class="field">
+    <%= f.label :CreateTime %><br>
+    <%= f.date_select :CreateTime %>
+  </div>
+  <div class="field">
+    <%= f.label :CreateUser %><br>
+    <%= f.text_field :CreateUser %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="right-content">
+  <div class="nav">
+    <div class="navbar-inner"><h6>采购订单列表</h6></div>
+  </div>
+  <div class="well-white body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>订单编号</th>
+        <th>供货商</th>
+        <th>订单金额</th>
+        <th>创建时间</th>
+        <th>创建人</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @purchase_orders.each do |order| %>
+          <tr>
+            <td><%= order.OrderId %></td>
+            <td><%= order.From %></td>
+            <td><%= order.Total %></td>
+            <td><%= order.CreateTime %></td>
+            <td><%= order.CreateUser %></td>
+            <td><%= order.State %></td>
+            <td><%= link_to '查看', order %>&nbsp;
+              <% if order.State =="新建" %>
+                  <%= link_to '编辑', edit_order_path(order) %>&nbsp;<%= link_to '删除', order, method: :delete, data: {confirm: 'Are you sure?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="align-center">
+      <a href="/purchase_orders/new" class="btn btn-primary">新建采购订单</a>
+    </div>
+  </div>
+</div>

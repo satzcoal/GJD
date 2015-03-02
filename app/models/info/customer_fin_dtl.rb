@@ -1,22 +1,17 @@
-class Info::CustomerFinDtl < ActiveRecord::Base
-  belongs_to :finance, :class_name => 'Info::CustomerFinance', foreign_key: :customer_fin_id
-  before_create :generate_cfd_id
+class Info::CustomerFinDtl < Info::RelationshipFinDtl
+  has_history
+  belongs_to :finance, :class_name => 'Info::CustomerFinance', foreign_key: :fin_id
 
-  def proceed
-    money = self.money
-    self.status_id = 1
-    self.save
+  def cfd_id
+    rfd_id
+  end
 
-    unless self.in_or_out
-      money = 0 - money
-    end
-
-    self.finance.amount = self.finance.amount + money
-    self.finance.save
+  def cfd_id= value
+    self.rfd_id = value
   end
 
   private
-  def generate_cfd_id
+  def generate_rfd_id
     cdate = Time.now.localtime().strftime('%Y%m%d')
     wherestr = "date_tmp = '#{cdate}'"
     if self.order_id.nil?

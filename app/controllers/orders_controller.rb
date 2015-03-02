@@ -4,22 +4,16 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
 
-  @type
+
   def index
-    @type= params[:type]
-    if @type== nil
-      @orders = Order.all
-    else
-      @orders = Order.where(type:@type)
-    end
-    puts @type
+    @orders = Order.all
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
     @sub_orders = @order.sub_orders
-   # @sub_orders = SubOrder.where(OrderId:@order.OrderId)
+    # @sub_orders = SubOrder.where(OrderId:@order.OrderId)
     @GoDwons = GoDown.all
     if @order.Type=="1"
       @urlName ="生成入库单"
@@ -38,7 +32,6 @@ class OrdersController < ApplicationController
   end
 
 
-
   # GET /orders/1/edit
   def edit
     @GoDwons = GoDown.all
@@ -46,7 +39,7 @@ class OrdersController < ApplicationController
 
   def split
     @i =1;
-    @gdids =  @order.sub_orders.select(:GoDown_id).map(&:GoDown_id).uniq
+    @gdids = @order.sub_orders.select(:GoDown_id).map(&:GoDown_id).uniq
     puts @gdids.count
     @order.sub_orders.select(:GoDown_id).map(&:GoDown_id).uniq.each do |gdid|
       puts "gdid:#{gdid}"
@@ -71,11 +64,11 @@ class OrdersController < ApplicationController
     end
 
     if @order.Type=="1"
-      @order.update(:State=>"待入库")
+      @order.update(:State => "待入库")
       redirect_to "/in_orders/#{@order.id}"
 
     else
-      @order.update(:State=>"待出库")
+      @order.update(:State => "待出库")
       redirect_to "/out_orders/#{@order.id}"
     end
 
@@ -87,17 +80,17 @@ class OrdersController < ApplicationController
     puts params;
     @order = Order.new(order_params)
     @order.State = "新建"
-    @order.CreateTime=  Time.new.strftime("%Y-%m-%d %H:%M:%S")
+    @order.CreateTime= Time.new.strftime("%Y-%m-%d %H:%M:%S")
     @order.CreateUser ="陈晓雨"
-     # @items.append(@tmp)
+    # @items.append(@tmp)
 
     respond_to do |format|
       if @order.save
         for x in 1..10
           @tmp = params.require("itemline#{x}").permit(:Item_id, :Sum, :GoDown_id)
-          if(@tmp[:Item_id] !="")
+          if (@tmp[:Item_id] !="")
             puts @tmp
-            @sub_order =SubOrder.new(:Item_id=>@tmp[:Item_id],:Sum=>@tmp[:Sum],:GoDown_id=>@tmp[:GoDown_id])
+            @sub_order =SubOrder.new(:Item_id => @tmp[:Item_id], :Sum => @tmp[:Sum], :GoDown_id => @tmp[:GoDown_id])
             @sub_order.Order_id= @order.id
             @sub_order.save
           end
@@ -119,8 +112,8 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update(order_params)
         for x in 1..@order.sub_orders.count
-          @tmp = params.require("itemline#{x}").permit(:id,:Item_id, :Sum, :GoDown_id)
-          if(@tmp[:id] !="")
+          @tmp = params.require("itemline#{x}").permit(:id, :Item_id, :Sum, :GoDown_id)
+          if (@tmp[:id] !="")
             puts @tmp
             @sub_order =SubOrder.find(@tmp[:id])
             @sub_order.update(@tmp)
@@ -148,13 +141,13 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:OrderId, :Name, :Type, :CreateTime, :CreateUser, :ExecTime, :Execer, :State)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:OrderId, :Name, :Type, :CreateTime, :CreateUser, :ExecTime, :Execer, :State)
+  end
 end

@@ -1,6 +1,11 @@
 <% if @info_customer_fin_dtls.empty? %>
   <div class="alert">
-    <strong>Sorry！</strong>此客户近期没有出入账记录！
+    <strong>Sorry！</strong>
+    <% if @info_customer.nil? %>
+      没有出入账信息可供查询！
+    <% else %>
+      此客户近期没有出入账记录！
+    <% end %>
   </div>
 <% else %>
 

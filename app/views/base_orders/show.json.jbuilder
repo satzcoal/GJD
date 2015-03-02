@@ -1,0 +1,1 @@
+json.extract! @base_order, :id, :OrderId, :type, :Total, :FactTotal, :From, :FromAddress, :From_Back, :From_BackAccountNum, :From_BackAccountName, :To, :ToAddress, :To_Back, :To_BackAccountNum, :To_BackAccountName, :MoneyState, :State, :CreateTime, :CreateUser, :created_at, :updated_at

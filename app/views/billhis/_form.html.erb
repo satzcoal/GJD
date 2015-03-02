@@ -1,0 +1,73 @@
+<%= form_for(@billhi) do |f| %>
+  <% if @billhi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@billhi.errors.count, "error") %> prohibited this billhi from being saved:</h2>
+
+      <ul>
+      <% @billhi.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :BaseOrder_id %><br>
+    <%= f.number_field :BaseOrder_id %>
+  </div>
+  <div class="field">
+    <%= f.label :Total %><br>
+    <%= f.text_field :Total %>
+  </div>
+  <div class="field">
+    <%= f.label :From %><br>
+    <%= f.text_field :From %>
+  </div>
+  <div class="field">
+    <%= f.label :FromAddress %><br>
+    <%= f.text_field :FromAddress %>
+  </div>
+  <div class="field">
+    <%= f.label :From_Back %><br>
+    <%= f.text_field :From_Back %>
+  </div>
+  <div class="field">
+    <%= f.label :From_BackAccountNum %><br>
+    <%= f.text_field :From_BackAccountNum %>
+  </div>
+  <div class="field">
+    <%= f.label :From_BackAccountName %><br>
+    <%= f.text_field :From_BackAccountName %>
+  </div>
+  <div class="field">
+    <%= f.label :To %><br>
+    <%= f.text_field :To %>
+  </div>
+  <div class="field">
+    <%= f.label :ToAddress %><br>
+    <%= f.text_field :ToAddress %>
+  </div>
+  <div class="field">
+    <%= f.label :To_Back %><br>
+    <%= f.text_field :To_Back %>
+  </div>
+  <div class="field">
+    <%= f.label :To_BackAccountNum %><br>
+    <%= f.text_field :To_BackAccountNum %>
+  </div>
+  <div class="field">
+    <%= f.label :To_BackAccountName %><br>
+    <%= f.text_field :To_BackAccountName %>
+  </div>
+  <div class="field">
+    <%= f.label :ExceTime %><br>
+    <%= f.date_select :ExceTime %>
+  </div>
+  <div class="field">
+    <%= f.label :ExceUser %><br>
+    <%= f.text_field :ExceUser %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

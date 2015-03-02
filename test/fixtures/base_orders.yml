@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  OrderId: MyString
+  type: 
+  Total: 9.99
+  FactTotal: 9.99
+  From: MyString
+  FromAddress: MyString
+  From_Back: MyString
+  From_BackAccountNum: MyString
+  From_BackAccountName: MyString
+  To: MyString
+  ToAddress: MyString
+  To_Back: MyString
+  To_BackAccountNum: MyString
+  To_BackAccountName: MyString
+  MoneyState: MyString
+  State: MyString
+  CreateTime: 2014-11-15
+  CreateUser: MyString
+
+two:
+  OrderId: MyString
+  type: 
+  Total: 9.99
+  FactTotal: 9.99
+  From: MyString
+  FromAddress: MyString
+  From_Back: MyString
+  From_BackAccountNum: MyString
+  From_BackAccountName: MyString
+  To: MyString
+  ToAddress: MyString
+  To_Back: MyString
+  To_BackAccountNum: MyString
+  To_BackAccountName: MyString
+  MoneyState: MyString
+  State: MyString
+  CreateTime: 2014-11-15
+  CreateUser: MyString

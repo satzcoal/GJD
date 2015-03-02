@@ -1,0 +1,1 @@
+json.extract! @billhi, :id, :BaseOrder_id, :Total, :From, :FromAddress, :From_Back, :From_BackAccountNum, :From_BackAccountName, :To, :ToAddress, :To_Back, :To_BackAccountNum, :To_BackAccountName, :ExceTime, :ExceUser, :created_at, :updated_at

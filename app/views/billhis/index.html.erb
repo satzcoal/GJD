@@ -1,0 +1,51 @@
+<h1>Listing billhis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Baseorder</th>
+      <th>Total</th>
+      <th>From</th>
+      <th>Fromaddress</th>
+      <th>From back</th>
+      <th>From backaccountnum</th>
+      <th>From backaccountname</th>
+      <th>To</th>
+      <th>Toaddress</th>
+      <th>To back</th>
+      <th>To backaccountnum</th>
+      <th>To backaccountname</th>
+      <th>Excetime</th>
+      <th>Exceuser</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @billhis.each do |billhi| %>
+      <tr>
+        <td><%= billhi.BaseOrder_id %></td>
+        <td><%= billhi.Total %></td>
+        <td><%= billhi.From %></td>
+        <td><%= billhi.FromAddress %></td>
+        <td><%= billhi.From_Back %></td>
+        <td><%= billhi.From_BackAccountNum %></td>
+        <td><%= billhi.From_BackAccountName %></td>
+        <td><%= billhi.To %></td>
+        <td><%= billhi.ToAddress %></td>
+        <td><%= billhi.To_Back %></td>
+        <td><%= billhi.To_BackAccountNum %></td>
+        <td><%= billhi.To_BackAccountName %></td>
+        <td><%= billhi.ExceTime %></td>
+        <td><%= billhi.ExceUser %></td>
+        <td><%= link_to 'Show', billhi %></td>
+        <td><%= link_to 'Edit', edit_billhi_path(billhi) %></td>
+        <td><%= link_to 'Destroy', billhi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Billhi', new_billhi_path %>

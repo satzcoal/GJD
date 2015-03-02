@@ -1,21 +1,28 @@
-<div>
-  <% if flash[:alert] %>
-    <p id="notice"><%= flash[:alert] %></p>
-  <% end %>
-  <%= form_tag do %>
-    <fieldset>
-      <legend>请登录</legend>
-      <div>
-        <label for="name">用户名:</label>
-        <%= text_field_tag :name, params[:name] %>
-      </div>
-      <div>
-        <label for="password">密码:</label>
-        <%= password_field_tag :password, params[:password] %>
-      </div>
-      <div>
-        <%= submit_tag '登录' %>
-      </div>
-    </fieldset>
-  <% end %>
+<div class="login">
+  <div class="panel">
+    <% if flash[:alert] %>
+      <p id="notice"><%= flash[:alert] %></p>
+    <% end %>
+    <%= form_tag(nil, :class => 'form-horizontal') do %>
+      <fieldset>
+        <h1>
+          <legend>汉铭潮品</legend>
+        </h1>
+        <label for="name" class="control-label">用户名:</label>
+
+        <div class="controls">
+          <%= text_field_tag :name, params[:name] %>
+        </div>
+        <div style="padding: 5px;"></div>
+        <label for="password" class="control-label">密码:</label>
+
+        <div class="controls">
+          <%= password_field_tag :password, params[:password] %>
+        </div>
+        <div style="padding-top: 5px">
+          <%= submit_tag '登录', :class => 'btn btn-info pull-right' %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
 </div>

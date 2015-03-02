@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  BaseOrder_id: 1
+  Item_id: 1
+  BasePrice: 9.99
+  SalPrice: 9.99
+  Discount: 9.99
+  CreateTime: 2014-11-19
+  BatchId: MyString
+  GoDown_id: 1
+  Sum: 1
+
+two:
+  BaseOrder_id: 1
+  Item_id: 1
+  BasePrice: 9.99
+  SalPrice: 9.99
+  Discount: 9.99
+  CreateTime: 2014-11-19
+  BatchId: MyString
+  GoDown_id: 1
+  Sum: 1

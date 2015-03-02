@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Orderid:</strong>
+  <%= @base_order.OrderId %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @base_order.type %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @base_order.Total %>
+</p>
+
+<p>
+  <strong>Facttotal:</strong>
+  <%= @base_order.FactTotal %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @base_order.From %>
+</p>
+
+<p>
+  <strong>Fromaddress:</strong>
+  <%= @base_order.FromAddress %>
+</p>
+
+<p>
+  <strong>From back:</strong>
+  <%= @base_order.From_Back %>
+</p>
+
+<p>
+  <strong>From backaccountnum:</strong>
+  <%= @base_order.From_BackAccountNum %>
+</p>
+
+<p>
+  <strong>From backaccountname:</strong>
+  <%= @base_order.From_BackAccountName %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @base_order.To %>
+</p>
+
+<p>
+  <strong>Toaddress:</strong>
+  <%= @base_order.ToAddress %>
+</p>
+
+<p>
+  <strong>To back:</strong>
+  <%= @base_order.To_Back %>
+</p>
+
+<p>
+  <strong>To backaccountnum:</strong>
+  <%= @base_order.To_BackAccountNum %>
+</p>
+
+<p>
+  <strong>To backaccountname:</strong>
+  <%= @base_order.To_BackAccountName %>
+</p>
+
+<p>
+  <strong>Moneystate:</strong>
+  <%= @base_order.MoneyState %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @base_order.State %>
+</p>
+
+<p>
+  <strong>Createtime:</strong>
+  <%= @base_order.CreateTime %>
+</p>
+
+<p>
+  <strong>Createuser:</strong>
+  <%= @base_order.CreateUser %>
+</p>
+
+<%= link_to 'Edit', edit_base_order_path(@base_order) %> |
+<%= link_to 'Back', base_orders_path %>

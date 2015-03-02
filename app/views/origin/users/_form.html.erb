@@ -1,14 +1,12 @@
 <%= form_for(@origin_user, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if @origin_user.errors.any? %>
-    <div id="error_explanation">
-      <h2>有<%= @origin_user.errors.count %>个验证条件没有通过</h2>
-
-      <ul>
-        <% @origin_user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <script type="text/javascript">
+      $.jGrowl('<% @origin_user.errors.full_messages.each do |message| %><%= message %><br/><% end %>', {
+        theme: 'growl-error',
+        header: '保存失败',
+        sticky: true
+      });
+    </script>
   <% end %>
 
   <fieldset>

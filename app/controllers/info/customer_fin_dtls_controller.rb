@@ -93,7 +93,7 @@ class Info::CustomerFinDtlsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def info_customer_fin_dtl_params
-    params.require(:info_customer_fin_dtl).permit(:customer_fin_id, :do_time, :in_or_out, :money, :cfd_id, :status_id, :proceed, :save, :comment)
+    params.require(:info_customer_fin_dtl).permit(:fin_id, :do_time, :in_or_out, :money, :cfd_id, :status_id, :proceed, :save, :comment)
   end
 
   def set_info_customer

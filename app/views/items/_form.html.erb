@@ -32,6 +32,18 @@
         <td>型号：</td>
         <td>   <%= select(:item, :subCategoryName, @subCategory.map { |c| [c.Name, c.Name] }) %></td>
       </tr>
+      <tr>
+      <td>成本价：</td>
+      <td>  <%= f.text_field :BasePrice %></td>
+    </tr>
+      <tr>
+        <td>销售价：</td>
+        <td>  <%= f.text_field :SalePrice %></td>
+      </tr>
+      <tr>
+        <td>折扣：</td>
+        <td>  <%= f.text_field :Discount %></td>
+      </tr>
       <tr class="hide">
         <td>    <%= f.label :subCategoryid %></td>
         <td>  <%= f.number_field :subCategoryid %></td>

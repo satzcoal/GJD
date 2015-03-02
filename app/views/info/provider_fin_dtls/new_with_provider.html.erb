@@ -1,0 +1,27 @@
+<h5 class="widget-name"><i class="fa fa-plus"></i>新建出入账</h5>
+<div class="row-fluid" style="margin-bottom: 1px">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <h6>出入账表单</h6>
+    </div>
+  </div>
+
+  <div class="well invoice">
+    <div class="invoice-logo" style="margin-left: 20px; ">
+      <span>客户编号：<%= @info_customer.cid %></span>
+
+      <h1 style="line-height: 20px;"><%= @info_customer.name %>
+        <% if @info_customer.has_short_name? %>（<%= @info_customer.shortName %>）
+        <% end %></h1>
+    </div>
+
+    <div class="total pull-right" style="margin: 0px; margin-right: 20px;">
+      <span>当前账户余额</span>
+      <strong class="text-error">￥<%= @info_customer.finance.amount %></strong>
+    </div>
+    <div class="row-fluid">
+
+    </div>
+  </div>
+</div>
+<%= render 'form' %>

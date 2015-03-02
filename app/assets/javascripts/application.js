@@ -89,10 +89,10 @@ function changecategory(obj) {
             for (var i = 0; i < items.length; i++) {
                 //if (items[i].Type == select) {
                 if (items[i].id == itemno) {
-                    $(this).append("<option value='" + items[i].id + "' selected='true'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "'>" + items[i].Name + "</option>");
+                    $(this).append("<option value='" + items[i].id + "' selected='true'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
                 }
                 else {
-                    $(this).append("<option value='" + items[i].id + "'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "'>" + items[i].Name + "</option>");
+                    $(this).append("<option value='" + items[i].id + "'  data='" + items[i].CategoryName + "|" + items[i].subCategoryName + "|" + items[i].BasePrice + "|" + items[i].SalePrice + "|" + items[i].Discount + "'>" + items[i].Name + "</option>");
                 }
 
                 // }
@@ -107,11 +107,13 @@ function changeItem(obj) {
     if ($(obj).find("option:selected").attr("data") != "请选择") {
         $("#category" + rowid).val(select[0]);
         $("#subcategory" + rowid).val(select[1]);
+        $("#saleprice" + rowid).val(select[2]);
         $("#itemline" + rowid + "_Item_id").val($(obj).find("option:selected").val());
     }
     else {
         $("#category" + rowid).val("");
         $("#subcategory" + rowid).val("");
+        $("#saleprice" + rowid).val();
         $("#itemline" + rowid + "_Item_id").val("");
     }
 }

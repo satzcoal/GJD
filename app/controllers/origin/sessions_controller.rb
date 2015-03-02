@@ -32,6 +32,7 @@ class Origin::SessionsController < ApplicationController
   def ajax_changepass
     user = Origin::User.find(session[:user_id])
     user.password = params[:password]
-    user.save
+    a = user.save!
+    p a
   end
 end

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Baseorder:</strong>
+  <%= @order_item.BaseOrder_id %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @order_item.Item_id %>
+</p>
+
+<p>
+  <strong>Baseprice:</strong>
+  <%= @order_item.BasePrice %>
+</p>
+
+<p>
+  <strong>Salprice:</strong>
+  <%= @order_item.SalPrice %>
+</p>
+
+<p>
+  <strong>Discount:</strong>
+  <%= @order_item.Discount %>
+</p>
+
+<p>
+  <strong>Createtime:</strong>
+  <%= @order_item.CreateTime %>
+</p>
+
+<p>
+  <strong>Batchid:</strong>
+  <%= @order_item.BatchId %>
+</p>
+
+<p>
+  <strong>Godown:</strong>
+  <%= @order_item.GoDown_id %>
+</p>
+
+<p>
+  <strong>Sum:</strong>
+  <%= @order_item.Sum %>
+</p>
+
+<%= link_to 'Edit', edit_order_item_path(@order_item) %> |
+<%= link_to 'Back', order_items_path %>

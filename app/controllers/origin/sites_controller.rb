@@ -1,5 +1,4 @@
 class Origin::SitesController < ApplicationController
-  layout 'origin'
   before_action :set_origin_site, only: [:show, :edit, :update, :destroy]
 
   # GET /origin/sites
@@ -48,7 +47,7 @@ class Origin::SitesController < ApplicationController
   def update
     respond_to do |format|
       if @origin_site.update(origin_site_params)
-        format.html { redirect_to @origin_site, notice: 'Site was successfully updated.' }
+        format.html { redirect_to origin_site_path, notice: 'Site was successfully updated.' }
         format.json { render :show, status: :ok, location: @origin_site }
       else
         format.html { render :edit }
@@ -70,7 +69,7 @@ class Origin::SitesController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_origin_site
-    @origin_site = Origin::Site.find(params[:id])
+    @origin_site = Origin::Site.first
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

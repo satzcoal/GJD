@@ -1,0 +1,45 @@
+<h1>Listing order_item_his</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Baseorder</th>
+      <th>Item</th>
+      <th>Baseprice</th>
+      <th>Salprice</th>
+      <th>Discount</th>
+      <th>Createtime</th>
+      <th>Batchid</th>
+      <th>Godown</th>
+      <th>Sum</th>
+      <th>Exceuser</th>
+      <th>Excedate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order_item_his.each do |order_item_hi| %>
+      <tr>
+        <td><%= order_item_hi.BaseOrder_id %></td>
+        <td><%= order_item_hi.Item_id %></td>
+        <td><%= order_item_hi.BasePrice %></td>
+        <td><%= order_item_hi.SalPrice %></td>
+        <td><%= order_item_hi.Discount %></td>
+        <td><%= order_item_hi.CreateTime %></td>
+        <td><%= order_item_hi.BatchId %></td>
+        <td><%= order_item_hi.GoDown_id %></td>
+        <td><%= order_item_hi.Sum %></td>
+        <td><%= order_item_hi.ExceUser %></td>
+        <td><%= order_item_hi.ExceDate %></td>
+        <td><%= link_to 'Show', order_item_hi %></td>
+        <td><%= link_to 'Edit', edit_order_item_hi_path(order_item_hi) %></td>
+        <td><%= link_to 'Destroy', order_item_hi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Order item hi', new_order_item_hi_path %>

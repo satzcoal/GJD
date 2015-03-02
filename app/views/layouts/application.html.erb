@@ -39,7 +39,17 @@
   <!-- Content -->
   <div id="content">
     <div class="wrapper">
-      <div class="widget"></div>
+      <% if notice %>
+        <script type="text/javascript">
+          $.jGrowl('<%= notice %>', {
+            <%= if flash[:notice_type]; raw "theme: 'growl-#{flash[:notice_type]}', "; end %>
+            <%= if flash[:header]; raw "header: '#{flash[:header]}', "; end %>
+            sticky: <%= if flash[:sticky]; flash[:sticky]; else 'false'; end %> });
+        </script>
+      <% end %>
+	
+      <div class="widget">
+      </div>
       <%= yield %>
       <div class="widget"></div>
     </div>
