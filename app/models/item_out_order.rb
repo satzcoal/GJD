@@ -1,0 +1,2 @@
+class ItemOutOrder  < BaseOrder
+end

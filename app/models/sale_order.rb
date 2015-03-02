@@ -1,0 +1,2 @@
+class SaleOrder < BaseOrder
+end

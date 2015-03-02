@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :sale_orders
+
+  resources :item_out_orders
+
+  resources :work_shops
+
+  resources :make_orders
+
   resources :billhis
 
   resources :order_item_his
@@ -11,6 +19,7 @@ Rails.application.routes.draw do
   resources :purchase_orders
 
   resources :o_orders
+  post 'item_out_orders/CreateOutOrder' => 'item_out_orders#CreateOutOrder'
   post 'o_orders/CreateOutOrder' => 'o_orders#CreateOutOrder'
   get 'o_orders/split/:id' => 'o_orders#split'
   get 'go_down_items/search' => 'go_down_items#search'
@@ -85,6 +94,9 @@ Rails.application.routes.draw do
   #---------------------------------------LEE ADD END
 
   get 'orders/split/:id' => 'orders#split'
+  get 'purchase_orders/split/:id' => 'purchase_orders#split'
+  get 'item_out_orders/split/:id' => 'item_out_orders#split'
+  get 'make_orders/split/:id' => 'make_orders#split'
 
   resources :sub_orders
 

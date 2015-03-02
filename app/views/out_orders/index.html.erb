@@ -1,52 +1,39 @@
-<div class="row-fluid">
-  <div class="right-content span10">
-    <div class="nav">
-      <div class="navbar-inner"><h3><b>出库单列表</b></h3></div>
-      <div class="well-white body">
-        <% @OOrders.each do |order| %>
-            <div class="nav" style="margin-top: 2px">
-              <div class="navbar-inner">
-                <h6 class="row-fluid">
-                  <div class="span3">
-                    <span class=""> 订单编号：<a href="/out_orders/show/<%= order.id %>"><%= order.OrderId %> </a></span>
-                  </div>
-                  <div class="span3"><span class="">状态：<%= order.State %></span></div>
-                  <div class="span3"><span class="">创建时间：<%= order.CreateTime %></span></div>
-                  <div class="span3"><span class="">创建人：<%= order.CreateUser %></span></div>
-                </h6>
-              </div>
-            </div>
-            <div class="well-white body">
-              <table class="table">
-                <tr>
-                  <th>出库单编号</th>
-                  <th>仓库名称</th>
-                  <th>执行时间</th>
-                  <th>执行人</th>
-                  <th>状态</th>
-                </tr>
-                <% OutOrder.where(:Order_id => order.id).each do |outorder| %>
-                    <tr>
-                      <td><%= outorder.OutOrderId %></td>
-                      <td><%= GoDown.find(outorder.GoDown_id).Name %></td>
-                      <td><%= outorder.ExecTime %></td>
-                      <td><%= outorder.Execer %></td>
-                      <td>
-                        <% if outorder.State == "新建" %>
-                            <a class="btn btn-primary" href="/out_orders/exec/<%= outorder.id %>">执行出库</a>
-                        <% else %>
-                            <%= outorder.State %>
-                        <% end %>
-                      </td>
-                    </tr>
-                <% end %>
-              </table>
-            </div>
-        <% end %>
-      </div>
-    </div>
+<div class="widget">
+  <h5 class="widget-title">出库单列表</h5>
+
+  <div class="well-white body">
+    <% if @out_order.count >0 %>
+        <table class="table">
+          <tr>
+            <th>出库单编号</th>
+            <th>订单编号</th>
+            <th>仓库名称</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>状态</th>
+          </tr>
+          <% @out_order.each do |order| %>
+              <tr>
+                <% baseorder = BaseOrder.find(order.Order_id) %>
+                <td><%= order.OutOrderId %></td>
+                <td><%= baseorder.OrderId %></td>
+                <td><%= GoDown.find(order.GoDown_id).Name %></td>
+                <td><%= baseorder.CreateUser %></td>
+                <td><%= baseorder.CreateTime %></td>
+                <td>
+                  <% if order.State == "新建" %>
+                      <a class="btn btn-primary" href="/out_orders/exec/<%= order.id %>">执行出库</a>
+                  <% else %>
+                      <%= order.State %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+    <% else %>
+        <div class="alert margin">
+          目前没有出库单
+        </div>
+    <% end %>
   </div>
 </div>
-
-
-

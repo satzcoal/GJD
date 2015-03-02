@@ -28,6 +28,7 @@ module GJD
     config.i18n.available_locales = [:'zh-CN']
     config.i18n.default_locale = :'zh-CN'
 
+
     config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       html_tag
     }

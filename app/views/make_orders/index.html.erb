@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+<div class="widget">
+  <h5 class="widget-name"><i class="fa fa-list"></i>产品入库</h5>
+
+  <div class="navbar">
+    <div class="navbar-inner"><h6>产品入库单列表</h6></div>
+  </div>
+  <div class="well body">
+    <% if @make_orders.count() >0 %>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>产品入库单编号</th>
+            <th>生产车间</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @make_orders.each do |order| %>
+              <tr>
+                <td><%= order.OrderId %></td>
+                <td><%= order.From %></td>
+                <td><%= order.CreateUser %></td>
+                <td><%= order.CreateTime %></td>
+                <td><%= order.State %></td>
+                <td><%= link_to '查看', order %>&nbsp;
+                  <% if order.State =="新建" %>
+                      <%= link_to '编辑', edit_purchase_order_path(order) %>&nbsp;<%= link_to '删除', order, method: :delete, data: {confirm: 'Are you sure?'} %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% else %>
+        <div class="alert margin">
+          目前还没有产品入库单
+        </div>
+    <% end %>
+  </div>
+  <div class="align-center">
+    <a href="/make_orders/new" class="btn btn-primary">新建产品入库单</a>
+  </div>
+</div>

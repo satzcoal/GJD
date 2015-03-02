@@ -10,68 +10,115 @@
           </ul>
         </div>
     <% end %>
+    <div class="widget">
+      <h5 class="widget-title">出库单</h5>
+    </div>
     <div class="row-fluid">
-      <div class="right-content span10">
-        <div class="nav">
-          <%= hidden_field :out_order, :id %>
-          <div class="navbar-inner">
-            <h3 class="row-fluid">
-              <span class="span4"><b>出库单：</b><%= @out_order.OutOrderId %></span>
-              <span class="span4"><b>仓库：</b><%= @gd.Name %></span>
-            </h3>
+      <div class="span4">
+        <div class="widget ">
+          <div class="navbar">
+            <div class="navbar-inner"><h6>基本信息</h6></div>
           </div>
-          <div class="well-white body">
-            <div class="nav">
-              <div class="navbar-inner">
-                <h6 class="row-fluid">
-                  <div class="span3"><span class=""> 订单编号：<%= @order.OrderId %></span></div>
-                  <div class="span3"><span class="">状态：<%= @order.State %></span></div>
-                  <div class="span3"><span class="">创建时间：<%= @order.CreateTime %></span></div>
-                  <div class="span3"><span class="">创建人：<%= @order.CreateUser %></span></div>
-                </h6>
-              </div>
-            </div>
-            <div class="well-white body">
-              <table class="table">
-                <thead>
-                <tr>
-                  <th>序号</th>
-                  <th>物品名称</th>
-                  <th>规格</th>
-                  <th>型号</th>
-                  <th>批次号</th>
-                  <th>生成日期</th>
-                  <th>数量</th>
-                  <th>实际出库数量</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <% i=1 %>
-                <% @o_order_items.each do |o_order_item| %>
-                    <tr>
-                      <td><%= i %>
-                        <input type="hidden" id="itemline<%= i %>_out_item_id" name="itemline<%= i %>[out_item_id]" value="<%= o_order_item.id %>">
-                      </td>
-                      <% @item = Item.find(o_order_item.Item_id) %>
-                      <td><%= @item.Name %></td>
-                      <td><%= @item.CategoryName %></td>
-                      <td><%= @item.subCategoryName %></td>
-                      <td><%= o_order_item.BatchId %></td>
-                      <td><%= o_order_item.CreateTime %></td>
-                      <td><%= o_order_item.Sum %></td>
-                      <td><%= number_field "itemline#{i}", "Sum", {:Class => "input-mini align-center", :min => "0", :max => o_order_item.Sum} %></td>
-                    </tr>
-                    <% i =i+1 %>
-                <% end %>
-                </tbody>
-              </table>
-              <div class="align-center">
-                <input type="submit" value="出库" class="btn btn-primary">
-              </div>
-            </div>
+          <div class="well body">
+            <dl class="dl-horizontal">
+              <dt>产品出库单编号：</dt>
+              <dd><%= @order.OrderId %>
+                <%= hidden_field :out_order, :id %>
+              </dd>
+              <dt>产品出库单状态：</dt>
+              <dd><%= @order.State %></dd>
+              <dt>创建人：</dt>
+              <dd><%= @order.CreateUser %></dd>
+              <dt>创建时间：</dt>
+              <dd><%= @order.CreateTime %></dd>
+            </dl>
           </div>
         </div>
       </div>
+      <div class="span4">
+        <div class="widget ">
+          <div class="navbar">
+            <div class="navbar-inner"><h6>仓库信息</h6></div>
+          </div>
+          <div class="well body">
+            <dl class="dl-horizontal">
+              <dt>仓库：</dt>
+              <dd><%= @gd.Name %></dd>
+              <dt>仓库位置：</dt>
+              <dd><%= @gd.Address %></dd>
+              <dt>管理员：</dt>
+              <dd><%= @gd.Admin %></dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <div class="widget ">
+          <div class="navbar">
+            <div class="navbar-inner"><h6>收货信息</h6></div>
+          </div>
+          <div class="well body">
+            <dl class="dl-horizontal">
+              <dt>收货人：</dt>
+              <dd><%= @order.To %></dd>
+              <dt>收货人地址：</dt>
+              <dd><%= @order.ToAddress %></dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <h6>物品信息</h6>
+      </div>
+    </div>
+    <div class="well body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>物品名称</th>
+          <th>规格</th>
+          <th>型号</th>
+          <th>批次号</th>
+          <th>生成日期</th>
+          <th>数量</th>
+          <th>实际出库数量</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% i=1 %>
+        <% @o_order_items.each do |o_order_item| %>
+            <tr>
+              <td><%= i %>
+                <input type="hidden" id="itemline<%= i %>_out_item_id" name="itemline<%= i %>[out_item_id]" value="<%= o_order_item.id %>">
+              </td>
+              <% @item = Item.find(o_order_item.Item_id) %>
+              <td><%= @item.Name %></td>
+              <td><%= @item.CategoryName %></td>
+              <td><%= @item.subCategoryName %></td>
+              <td><%= o_order_item.BatchId %></td>
+              <td><%= o_order_item.CreateTime %></td>
+              <td><%= o_order_item.Sum %></td>
+              <td><%= number_field "itemline#{i}", "Sum", {:Class => "input-mini align-center", :min => "0", :max => o_order_item.Sum} %></td>
+            </tr>
+            <% i =i+1 %>
+        <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="align-center">
+      <input type="submit" value="出库" class="btn btn-primary">
+    </div>
     </div>
 <% end %>

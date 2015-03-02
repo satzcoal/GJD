@@ -1,0 +1,84 @@
+<div class="widget">
+  <h5 class="widget-name"><i class="fa fa-list"></i>原料出库订单</h5>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="widget">
+        <div class="navbar">
+          <div class="navbar-inner"><h6>基本信息</h6></div>
+        </div>
+        <div class="well body">
+          <dl class="dl-horizontal">
+            <dt>订单编号：</dt>
+            <dd><%= @item_out_order.OrderId %>&nbsp;</dd>
+            <dt>订单状态：</dt>
+            <dd><%= @item_out_order.State %></dd>
+            <dt>创建人：</dt>
+            <dd><%= @item_out_order.CreateUser %></dd>
+            <dt>创建时间：</dt>
+            <dd><%= @item_out_order.CreateTime %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="span6">
+      <div class="widget">
+        <div class="navbar">
+          <div class="navbar-inner"><h6>生产车间</h6></div>
+        </div>
+        <div class="well body">
+          <dl class="dl-horizontal">
+            <dt>生产车间：</dt>
+            <dd><%= @item_out_order.To %></dd>
+            <dt>生产车间地址：</dt>
+            <dd><%= @item_out_order.ToAddress %></dd>
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="navbar-inner"><h6>详细信息</h6></div>
+  </div>
+  <div class="well body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>物品名称</th>
+        <th>规格</th>
+        <th>型号</th>
+        <th>数量</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% i=1 %>
+      <% @orderitems.each do |orderitem| %>
+          <tr>
+            <td><%= i %></td>
+            <% @item = Item.find(orderitem.Item_id) %>
+            <td><%= @item.Name %></td>
+            <td><%= @item.CategoryName %></td>
+            <td><%= @item.subCategoryName %></td>
+            <td><%= orderitem.Sum %></td>
+          </tr>
+          <% i =i+1 %>
+      <% end %>
+      </tbody>
+
+    </table>
+  </div>
+
+  <% if @item_out_order.State=="新建" %>
+      <div class="well-white body">
+        <div class="align-center"> <%= link_to "生成出库单", "/item_out_orders/split/#{@item_out_order.id}", {:Class => "btn btn-primary"} %></div>
+      </div>
+  <% end %>
+
+</div>
+
